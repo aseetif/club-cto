@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
 export async function POST(request: Request) {
   const { email } = await request.json();
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { error } = await supabase.from("invitations").insert({ email });
+  const { error } = await supabaseAdmin.from("invitations").insert({ email });
 
   if (error && "code" in error && error.code === "23505") {
     return NextResponse.json(
